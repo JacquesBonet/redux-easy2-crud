@@ -1,0 +1,40 @@
+{
+  "todos": [
+    {
+      "description": "a1",
+      "completed": false,
+      "id": "cig3sg34f000137529ajk9lcu",
+      "links": [
+        {
+          "type": "details",
+          "id": "cig3sg348000037523gbpgys9"
+        }
+      ]
+    },
+    {
+      "description": "a2",
+      "completed": false,
+      "id": "cig3sg348000037523gbpgys9",
+      "links": [
+        {
+          "type": "details",
+          "id": "cig3sg43b00023752f5sw9v3q"
+        }
+      ]
+    }
+  ],
+  "details": [
+    {
+      "name": "detail a1",
+      "id": "cig3sg348000037523gbpgys9"
+    },
+    {
+      "name": "detail a1",
+      "id": "cig3sg43b00023752f5sw9v3q"
+    },
+    {
+      "name": "detail a2",
+      "id": "cig3sgate00043752zmiccbr4"
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "private": true,
+  "devDependencies": {
+    "enzyme": "^2.4.1",
+    "react-addons-test-utils": "^15.3.0",
+    "react-scripts": "^0.6.0"
+  },
+  "dependencies": {
+    "@risingstack/trace": "^2.27.4",
+    "classnames": "^2.2.5",
+    "es6-promise": "^4.0.5",
+    "isomorphic-fetch": "*",
+    "react": "^15.3.0",
+    "react-dom": "^15.3.0",
+    "react-redux": "^4.4.5",
+    "redux": "^3.5.2",
+    "todomvc-app-css": "^2.0.6"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "eject": "react-scripts eject",
+    "test": "react-scripts test"
+  }
+}

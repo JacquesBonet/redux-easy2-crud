@@ -6,7 +6,7 @@ import test from './reducers/test'
 import {PATH_TODOS} from './constants/todos'
 import * as actions  from './actions/docs'
 
-describe('createStore', () => {
+describe('readStore', () => {
     it('exposes the public API', () => {
         let initialData = {}
 

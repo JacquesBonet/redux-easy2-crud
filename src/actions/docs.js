@@ -3,29 +3,38 @@ import * as TYPES from "../constants/docs"
 
 export const read = (path) => ({ path, type: TYPES.READ })
 
-export const readSuccess = (path, docs) => ({ path, payload: docs, type: TYPES.READ_SUCCESS})
+export const readSuccess = (path, docs) => ({ path, docs, type: TYPES.READ_SUCCESS})
 
 export const readId = (path, id) => ({ path, id, type: TYPES.READID})
 
-export const readIdSuccess = (path, doc) => ({ path, payload: doc, type: TYPES.READID_SUCCESS})
+export const readIdSuccess = (path, doc) => ({ ...doc, type: TYPES.READID_SUCCESS})
 
-export const create = (path, doc) => ({path, payload: doc, type: TYPES.CREATE})
+export const create = (path, doc) => ({ ...doc, path, type: TYPES.CREATE})
 
-export const createSuccess = doc => ({payload: doc, type: TYPES.CREATE_SUCCESS})
+/**
+ * Success creation
+ * @param doc   The object created. A path and id attribute has been injected on the object which will permit to identify its category
+ */
+export const createSuccess = doc => ({...doc, type: TYPES.CREATE_SUCCESS})
 
-export const createOrUpdate = (path, doc) => {
-  if (doc.id)
-    return update( doc)
-  else
-    return create( path, doc)
-}
+/**
+ * Update CRUD action
+ * @param doc   The ressource to modify. This ressource must contains a path attribut permitting to identify its type and a id attribute
+ */
+export const update = (doc) => ({ ...doc, type: TYPES.UPDATE})
 
-export const update = (doc) => ({ payload: doc, type: TYPES.UPDATE})
-
-export const updateSuccess = (doc) => ({ payload: doc, type: TYPES.UPDATE_SUCCESS})
+export const updateSuccess = (doc) => ({ ...doc, type: TYPES.UPDATE_SUCCESS})
 
 export const del = (doc) => ({ ...doc, type: TYPES.DELETE})
 
-export const delSuccess = (doc)  => ({ payload: doc, type: TYPES.DELETE_SUCCESS})
+export const delSuccess = (doc)  => ({ ...doc, type: TYPES.DELETE_SUCCESS})
 
 export const crudError = (type, path, error) => ({type, path, error})
+
+
+export const createOrUpdate = (path, doc) => {
+    if (doc.id)
+        return update( doc)
+    else
+        return create( path, doc)
+}

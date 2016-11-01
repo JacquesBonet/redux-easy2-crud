@@ -63,7 +63,7 @@ export default function createCrudMiddleware() {
                     config.readIdStart(action.path, action.id)
                     break
                 case TYPES.CREATE:
-                    config.createStart(action)
+                    config.createStart(action.path, action)
                     break
                 case TYPES.DELETE:
                     config.delStart(action)
@@ -81,10 +81,8 @@ export default function createCrudMiddleware() {
      * @param path   the path to read. path is the type of doc to read
      */
     function readStart(path) {
-        console.log( 'readStart')
         return rawFetchPromise( path)
             .then(result => {
-                console.log( 'readSuccess =' + JSON.stringify(result))
                 config.dispatch(docActions.readSuccess(path, result))
             })
             .catch(err => {

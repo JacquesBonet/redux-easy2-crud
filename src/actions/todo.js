@@ -1,8 +1,9 @@
 import * as docs from './docs.js'
+import {PATH_TODOS} from '../constants/todos'
 
-export const addTodo = aText => (docs.create( 'todos', aText))
+export const readTodo = aText => (docs.read( PATH_TODOS))
+export const addTodo = aText => (docs.create( PATH_TODOS, { description: aText}))
 export const deleteTodo = aDoc => (docs.del( aDoc))
 export const editTodo = aDoc => (docs.update(aDoc))
-export const completeTodo = aDoc => (docs.update( { ...aDoc, completeTodo}))
-export const completeAll = () => ({ type: types.COMPLETE_ALL })
-export const clearCompleted = () => ({ type: types.CLEAR_COMPLETED })
+export const completeTodo = (aDoc, complete) => (docs.update( { ...aDoc, complete}))
+

@@ -16,19 +16,18 @@ export default function docs(state, path, action) {
    switch (action.type) {
 
       case READALL_SUCCESS:
-         return action.payload.filter(doc => doc.path === path)
+         return action.docs.filter(doc => doc.path === path)
 
        case READ_SUCCESS:
-         console.log( 'fetch success')
-         return [...state, ...action.payload]
+         return [...state, ...action.docs]
 
       case READID_SUCCESS:
          if (action.path && action.path !== path)
             return state
          else if (state instanceof Array)
-            return [...state, action.payload]
+            return [...state, action]
          else
-            return action.payload
+            return action
 
       /* problem with pull */
       /* we receive two event ADD_SUCCESS and PULL_SUCCES */

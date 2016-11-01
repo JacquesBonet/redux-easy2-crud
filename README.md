@@ -1,0 +1,1 @@
+# redux-easy2-crud

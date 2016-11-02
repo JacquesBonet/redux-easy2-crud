@@ -5,10 +5,6 @@ export const read = (path) => ({ path, type: TYPES.READ })
 
 export const readSuccess = (path, docs) => ({ path, docs, type: TYPES.READ_SUCCESS})
 
-export const readId = (path, id) => ({ path, id, type: TYPES.READID})
-
-export const readIdSuccess = (path, doc) => ({ ...doc, type: TYPES.READID_SUCCESS})
-
 export const create = (path, doc) => ({ ...doc, path, type: TYPES.CREATE})
 
 /**

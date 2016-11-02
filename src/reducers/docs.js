@@ -1,11 +1,8 @@
 import {
    CREATE_SUCCESS,
    DELETE_SUCCESS,
-   DELETEALL_SUCCESS,
    UPDATE_SUCCESS,
-   READALL_SUCCESS,
-   READ_SUCCESS,
-   READID_SUCCESS
+   READ_SUCCESS
 } from "../constants/docs";
 
 export default function docs(state, path, action) {
@@ -15,19 +12,8 @@ export default function docs(state, path, action) {
 
    switch (action.type) {
 
-      case READALL_SUCCESS:
-         return action.docs.filter(doc => doc.path === path)
-
        case READ_SUCCESS:
-         return [...state, ...action.docs]
-
-      case READID_SUCCESS:
-         if (action.path && action.path !== path)
-            return state
-         else if (state instanceof Array)
-            return [...state, action]
-         else
-            return action
+         return [...action.docs]
 
       /* problem with pull */
       /* we receive two event ADD_SUCCESS and PULL_SUCCES */
@@ -56,12 +42,6 @@ export default function docs(state, path, action) {
             return state.filter(doc => {
                return doc.id !== action.id
             })
-         else
-            return state
-
-      case DELETEALL_SUCCESS:
-         if (state instanceof Array)
-            return []
          else
             return state
 

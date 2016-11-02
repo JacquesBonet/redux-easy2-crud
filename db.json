@@ -24,9 +24,9 @@
     },
     {
       "description": "Bonjour",
+      "id": 1234,
       "path": "todos",
-      "type": "CREATE",
-      "id": "86535de0-4210-4c57-9096-993a7d5bd9e2"
+      "type": "CREATE"
     }
   ],
   "details": [

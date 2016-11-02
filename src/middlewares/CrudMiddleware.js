@@ -47,7 +47,6 @@ export default function createCrudMiddleware() {
 
     const config = {
         readStart,
-        readIdStart,
         createStart,
         updateStart,
         delStart
@@ -60,9 +59,6 @@ export default function createCrudMiddleware() {
             switch (action.type) {
                 case TYPES.READ:
                     config.readStart(action.path)
-                    break
-                case TYPES.READID:
-                    config.readIdStart(action.path, action.id)
                     break
                 case TYPES.CREATE:
                     config.createStart(action.path, action)
@@ -91,23 +87,6 @@ export default function createCrudMiddleware() {
             .catch(err => {
                 log.error( 'readError =' + err)
                 config.dispatch(docActions.crudError(TYPES.READ_ERROR, path, err))
-            });
-    }
-
-    /**
-     *
-     * @param path   the path to read. path is the type of doc to read
-     * @param id     id of the document to search
-     */
-    function readIdStart(path, id) {
-        return rawFetchPromise( path + '/' + id)
-            .then(result => {
-                log.debug( 'readIdSuccess')
-                config.dispatch(docActions.readIdSuccess(path, result))
-            })
-            .catch(err => {
-                log.debug( 'readIdError =' + err)
-                config.dispatch(docActions.crudError(TYPES.READID_ERROR, path, err))
             });
     }
 

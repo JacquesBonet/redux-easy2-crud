@@ -1,5 +1,5 @@
-require('es6-promise').polyfill();
 import isoFetch from "isomorphic-fetch"
+import log from 'winston'
 import * as TYPES  from '../constants/docs'
 import * as docActions  from '../actions/docs'
 
@@ -18,7 +18,7 @@ function checkError(response) {
     if (response.ok === false || response.status >= 400) {
         const error = new Error(response.status);
         error.response = response;
-        console.log( 'error = ' + error)
+        log.error( 'error = ' + error)
         throw error;
     }
 
@@ -28,13 +28,15 @@ function checkError(response) {
 const ROOT_PATH = 'http://localhost:3001/';
 
 export function rawFetchPromise( url, method = 'GET', body = undefined) {
-    return isoFetch( ROOT_PATH + url, {
+    const fullPath = ROOT_PATH + url
+    log.debug( 'isoFetch, url = ' + fullPath + ' method = ' + method + ' body = ' + JSON.stringify(body))
+    return isoFetch( fullPath, {
         method,
         headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json'
         },
-        body
+        body: JSON.stringify(body)
     })
    .then(parseJSON)
    .then(checkError);
@@ -83,10 +85,11 @@ export default function createCrudMiddleware() {
     function readStart(path) {
         return rawFetchPromise( path)
             .then(result => {
+                log.debug( 'readSuccess')
                 config.dispatch(docActions.readSuccess(path, result))
             })
             .catch(err => {
-                console.log( 'readError =' + err)
+                log.error( 'readError =' + err)
                 config.dispatch(docActions.crudError(TYPES.READ_ERROR, path, err))
             });
     }
@@ -99,40 +102,49 @@ export default function createCrudMiddleware() {
     function readIdStart(path, id) {
         return rawFetchPromise( path + '/' + id)
             .then(result => {
+                log.debug( 'readIdSuccess')
                 config.dispatch(docActions.readIdSuccess(path, result))
             })
             .catch(err => {
+                log.debug( 'readIdError =' + err)
                 config.dispatch(docActions.crudError(TYPES.READID_ERROR, path, err))
             });
     }
 
 
     function createStart(path, doc) {
+        log.debug( 'createStart path = ' + path + ' doc = ' + JSON.stringify(doc))
         return rawFetchPromise( path, 'post', doc)
             .then(result => {
+                log.debug( 'createSuccess')
                 config.dispatch(docActions.createSuccess(path, result))
             })
             .catch(err => {
+                log.debug( 'createError =' + err)
                 config.dispatch(docActions.crudError(TYPES.CREATE_ERROR, path, err))
             });
     }
 
     function updateStart(aDoc) {
-        return rawFetchPromise( aDoc.path, 'put', aDoc)
+        return rawFetchPromise( aDoc.path + '/' + aDoc.id, 'put', aDoc)
             .then(result => {
+                log.debug( 'updateSuccess')
                 config.dispatch(docActions.updateSuccess(aDoc.path, result))
             })
             .catch(err => {
+                log.debug( 'updateError =' + err)
                 config.dispatch(docActions.crudError(TYPES.UPDATE_ERROR, aDoc.path, err))
             });
     }
 
     function delStart(aDoc) {
-        return rawFetchPromise( aDoc.path, 'del', aDoc)
+        return rawFetchPromise( aDoc.path + '/' + aDoc.id, 'delete', aDoc)
             .then(result => {
+                log.debug( 'deleteSuccess')
                 config.dispatch(docActions.delSuccess(aDoc.path, result))
             })
             .catch(err => {
+                log.debug( 'deleteError =' + err)
                 config.dispatch(docActions.crudError(TYPES.DELETE_ERROR, aDoc.path, err))
             });
     }

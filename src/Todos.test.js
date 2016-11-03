@@ -20,11 +20,11 @@ describe('createStore', () => {
         existIdPromise(PATH_TODOS, id)
             .then(val => {
                 console.log('existIdPromise ' + JSON.stringify(val))
-                if (val.status == 404) {
+                if (val.status == 404) {                                                        // element doesn't exist, create it
                     store.dispatch(actions.create(PATH_TODOS, {description: 'Bonjour', id}))
                 }
             })
-            .catch((err) => { // element doesn't exist, create it
+            .catch((err) => {
                 console.log('error :' + JSON.stringify(err))
             })
     })
@@ -40,14 +40,32 @@ describe('readStore', () => {
 
 describe('updateStore', () => {
     it('exposes the public API', () => {
-
-        store.dispatch(actions.update({path: PATH_TODOS, description: 'au revoir', id}))
+        existIdPromise(PATH_TODOS, id)
+            .then(val => {
+                console.log('existIdPromise ' + JSON.stringify(val))
+                if (val.status == 200) {                                                        // element exist, update it
+                    store.dispatch(actions.update({path: PATH_TODOS, description: 'au revoir', id}))
+                }
+            })
+            .catch((err) => {
+                console.log('error :' + JSON.stringify(err))
+            })
     })
 })
+
 
 describe('deleteStore', () => {
     it('exposes the public API', () => {
-
-        store.dispatch(actions.del(PATH_TODOS, id))
+        existIdPromise(PATH_TODOS, id)
+            .then(val => {
+                console.log('existIdPromise ' + JSON.stringify(val))
+                if (val.status == 200) {                                                        // element exist, delete it
+                    store.dispatch(actions.del(PATH_TODOS, id))
+                }
+            })
+            .catch((err) => {
+                console.log('error :' + JSON.stringify(err))
+            })
     })
 })
+

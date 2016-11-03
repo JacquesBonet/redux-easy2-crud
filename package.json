@@ -1,5 +1,7 @@
 {
-  "private": true,
+  "name": "redux-easy2-crud",
+  "version": "1.0.0",
+  "description": "Easy crud programming with Redux",
   "devDependencies": {
     "enzyme": "^2.4.1",
     "react-addons-test-utils": "^15.3.0",

@@ -32,10 +32,6 @@ npm test
 
 ### Todo
 
-Finish test program
-
-Finish to debug delete
-
 Register the project on npm
 
 Enhance the sample with a real application (the concept has been validate with a no open source application)

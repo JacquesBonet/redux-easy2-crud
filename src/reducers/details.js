@@ -6,15 +6,7 @@ const initialState = []
 
 export default function details( state = initialState, action) {
 
-   const newState =  docs( state, PATH_DETAILS, action)
-
-    if (log.level === 'debug' && action.path === PATH_DETAILS) {
-        log.debug('action = ' + JSON.stringify(action))
-
-        log.debug('newState = ' + JSON.stringify(newState))
-    }
-
-    return newState
+   return docs( state, PATH_DETAILS, action);
 }
 
 

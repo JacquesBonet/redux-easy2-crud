@@ -29,7 +29,6 @@ const ROOT_PATH = 'http://localhost:3001/';
 
 export function rawFetchPromise( url, method = 'GET', body = undefined) {
     const fullPath = ROOT_PATH + url
-    log.debug( 'isoFetch, url = ' + fullPath + ' method = ' + method + ' body = ' + JSON.stringify(body))
     return isoFetch( fullPath, {
         method,
         headers: {
@@ -81,7 +80,6 @@ export default function createCrudMiddleware() {
     function readStart(path) {
         return rawFetchPromise( path)
             .then(result => {
-                log.debug( 'readSuccess')
                 config.dispatch(docActions.readSuccess(path, result))
             })
             .catch(err => {
@@ -92,14 +90,12 @@ export default function createCrudMiddleware() {
 
 
     function createStart(path, doc) {
-        log.debug( 'createStart path = ' + path + ' doc = ' + JSON.stringify(doc))
         return rawFetchPromise( path, 'post', doc)
             .then(result => {
-                log.debug( 'createSuccess')
                 config.dispatch(docActions.createSuccess(path, result))
             })
             .catch(err => {
-                log.debug( 'createError =' + err)
+                log.error( 'createError =' + err)
                 config.dispatch(docActions.crudError(TYPES.CREATE_ERROR, path, err))
             });
     }
@@ -107,11 +103,10 @@ export default function createCrudMiddleware() {
     function updateStart(aDoc) {
         return rawFetchPromise( aDoc.path + '/' + aDoc.id, 'put', aDoc)
             .then(result => {
-                log.debug( 'updateSuccess')
                 config.dispatch(docActions.updateSuccess(aDoc.path, result))
             })
             .catch(err => {
-                log.debug( 'updateError =' + err)
+                log.error( 'updateError =' + err)
                 config.dispatch(docActions.crudError(TYPES.UPDATE_ERROR, aDoc.path, err))
             });
     }
@@ -119,11 +114,10 @@ export default function createCrudMiddleware() {
     function delStart(aDoc) {
         return rawFetchPromise( aDoc.path + '/' + aDoc.id, 'delete', aDoc)
             .then(result => {
-                log.debug( 'deleteSuccess')
                 config.dispatch(docActions.delSuccess(aDoc.path, result))
             })
             .catch(err => {
-                log.debug( 'deleteError =' + err)
+                log.error( 'deleteError =' + err)
                 config.dispatch(docActions.crudError(TYPES.DELETE_ERROR, aDoc.path, err))
             });
     }

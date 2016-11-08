@@ -32,6 +32,6 @@ npm test
 
 ### Todo
 
-Register the project on npm
-
 Enhance the sample with a real application (the concept has been validate with a no open source application)
+
+Add more test

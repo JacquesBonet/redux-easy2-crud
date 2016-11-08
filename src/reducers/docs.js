@@ -6,17 +6,18 @@ import {
 } from "../constants/docs";
 
 export default function docs(state, path, action) {
-
    if (action.path && action.path !== path)
       return state
 
+    if (log.level === 'debug') {
+        log.debug('action = ' + JSON.stringify(action))
+    }
+
    switch (action.type) {
 
-       case READ_SUCCESS:
+      case READ_SUCCESS:
          return [...action.docs]
 
-      /* problem with pull */
-      /* we receive two event ADD_SUCCESS and PULL_SUCCES */
       case CREATE_SUCCESS:
       case UPDATE_SUCCESS:
          if (state instanceof Array) {

@@ -6,9 +6,11 @@ The avantage of this library is :
 
 * Action, reducer and middleware are shorter to write
 
-There is only 4 actions, CREATE, READ, UPDATE, DELETE
+There is only 4 actions, CREATE, READ, UPDATE, DELETE.
 
-The difference with others redux middleware is we associate a path to the action, permitting to identify the managed ressource.
+Its no more neccessary to specify (for ex a todo action) like  CREATE_TODO, READ_TODO, UPDATE_TODO, DELETE_TODO but CREATE, READ, UPDATE, DELETE, and associate a additionnal parameter to the redux action. This parameter specify the kind of the ressource (path).
+
+The path permits to identify the managed ressource.
 
 * no redundency on the code
 

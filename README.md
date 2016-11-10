@@ -12,7 +12,9 @@ Its no more neccessary to specify (for ex a todo action) like  CREATE_TODO, READ
 
 The path permits to identify the managed ressource.
 
-* no redundency on the code
+The interest is we avoid some redundency on the code.
+
+
 
 This project focus only on action, reducer and middleware.
 

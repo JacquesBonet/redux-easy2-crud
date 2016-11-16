@@ -1,6 +1,6 @@
 # Redux EASY2 CRUD
 
-redux-easy2-crud is a library permitting to communicate with a Restful server following the CRUD architecture.
+redux-easy2-crud is a library permitting to communicate with a Restful server following CRUD architecture.
 
 The avantage of this library is :
 
@@ -8,17 +8,17 @@ The avantage of this library is :
 
 There is only 4 actions, CREATE, READ, UPDATE, DELETE.
 
-Its no more neccessary to specify (for ex a todo action) like  CREATE_TODO, READ_TODO, UPDATE_TODO, DELETE_TODO but CREATE, READ, UPDATE, DELETE, and associate a additionnal parameter to the redux action. This parameter specify the kind of the ressource (path).
+Its no more neccessary to specify actions like CREATE_XXX, READ_XXX, UPDATE_XXX, DELETE_XXX (for ex a todo action we normally have CREATE_TODO, READ_TODO, UPDATE_TODO, DELETE_TODO). 
+With easy2_crud the action are CREATE, READ, UPDATE, DELETE and we associate a additionnal "path" parameter to the redux action. This parameter specify the kind of the ressource (path).
 
-The path permits to identify the managed ressource.
+The "path" permits to identify the managed ressource.
 
-The interest is we avoid some redundency on the code.
-
+The interest of doing like that is we reduce code to write and redundency on the code.
 
 
 This project focus only on action, reducer and middleware.
 
-The connections of these modules to Redux containers don't change.
+The connections of these modules to Redux containers is the same than regular Redux action. 
 
 
 

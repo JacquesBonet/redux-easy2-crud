@@ -8,7 +8,7 @@ The avantage of this library is :
 
 There is only 4 actions, CREATE, READ, UPDATE, DELETE.
 
-Its no more neccessary to specify actions like CREATE_XXX, READ_XXX, UPDATE_XXX, DELETE_XXX (for ex a todo action we normally have CREATE_TODO, READ_TODO, UPDATE_TODO, DELETE_TODO). 
+Its no more neccessary to specify actions like CREATE_XXX, READ_XXX, UPDATE_XXX, DELETE_XXX (for ex in a todo action we normally have CREATE_TODO, READ_TODO, UPDATE_TODO, DELETE_TODO). 
 With easy2_crud the action are CREATE, READ, UPDATE, DELETE and we associate a additionnal "path" parameter to the redux action. This parameter specify the kind of the ressource (path).
 
 The "path" permits to identify the managed ressource.

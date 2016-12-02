@@ -1,6 +1,5 @@
-import log from 'winston'
 import {PATH_TODOS} from "../constants/todos"
-import docs from "./docs"
+import docs from "../../src/reducers/docs"
 
 const initialState = [];
 

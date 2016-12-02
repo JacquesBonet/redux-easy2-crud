@@ -1,4 +1,4 @@
-import CrudMiddleware from '../middlewares/CrudMiddleware'
+import CrudMiddleware from '../../src/middlewares/CrudMiddleware'
 import {createStore, applyMiddleware, compose} from 'redux'
 import rootReducer from '../reducers'
 

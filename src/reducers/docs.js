@@ -9,10 +9,6 @@ export default function docs(state, path, action) {
    if (action.path && action.path !== path)
       return state
 
-    if (log.level === 'debug') {
-        log.debug('action = ' + JSON.stringify(action))
-    }
-
    switch (action.type) {
 
       case READ_SUCCESS:

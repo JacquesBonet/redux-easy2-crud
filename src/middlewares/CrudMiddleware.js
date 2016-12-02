@@ -1,5 +1,4 @@
 import isoFetch from "isomorphic-fetch"
-import log from 'winston'
 import * as TYPES  from '../constants/docs'
 import * as docActions  from '../actions/docs'
 
@@ -18,7 +17,6 @@ function checkError(response) {
     if (response.ok === false || response.status >= 400) {
         const error = new Error(response.status);
         error.response = response;
-        log.error( 'error = ' + error)
         throw error;
     }
 
@@ -26,6 +24,9 @@ function checkError(response) {
 }
 
 const ROOT_PATH = 'http://localhost:3001/';
+
+const config = {
+};
 
 export function rawFetchPromise( url, method = 'GET', body = undefined) {
     const fullPath = ROOT_PATH + url
@@ -41,86 +42,71 @@ export function rawFetchPromise( url, method = 'GET', body = undefined) {
    .then(checkError);
 }
 
+export default store => next => action => {
+    config.dispatch = store.dispatch
+    const returnValue = next(action)
 
-export default function createCrudMiddleware() {
-
-    const config = {
-        readStart,
-        createStart,
-        updateStart,
-        delStart
-    };
-    return store => {
-        config.dispatch = store.dispatch
-        return next => action => {
-            const returnValue = next(action)
-
-            switch (action.type) {
-                case TYPES.READ:
-                    config.readStart(action.path)
-                    break
-                case TYPES.CREATE:
-                    config.createStart(action.path, action)
-                    break
-                case TYPES.DELETE:
-                    config.delStart(action)
-                    break
-                case TYPES.UPDATE:
-                    config.updateStart(action)
-                    break
-            }
-            return returnValue
-        }
+    switch (action.type) {
+        case TYPES.READ:
+            readStart(action.path)
+            break
+        case TYPES.CREATE:
+            createStart(action.path, action)
+            break
+        case TYPES.DELETE:
+            delStart(action)
+            break
+        case TYPES.UPDATE:
+            updateStart(action)
+            break
     }
-
-    /**
-     *
-     * @param path   the path to read. path is the type of doc to read
-     */
-    function readStart(path) {
-        return rawFetchPromise( path)
-            .then(result => {
-                config.dispatch(docActions.readSuccess(path, result))
-            })
-            .catch(err => {
-                log.error( 'readError =' + err)
-                config.dispatch(docActions.crudError(TYPES.READ_ERROR, path, err))
-            });
-    }
-
-
-    function createStart(path, doc) {
-        return rawFetchPromise( path, 'post', doc)
-            .then(result => {
-                config.dispatch(docActions.createSuccess(path, result))
-            })
-            .catch(err => {
-                log.error( 'createError =' + err)
-                config.dispatch(docActions.crudError(TYPES.CREATE_ERROR, path, err))
-            });
-    }
-
-    function updateStart(aDoc) {
-        return rawFetchPromise( aDoc.path + '/' + aDoc.id, 'put', aDoc)
-            .then(result => {
-                config.dispatch(docActions.updateSuccess(aDoc.path, result))
-            })
-            .catch(err => {
-                log.error( 'updateError =' + err)
-                config.dispatch(docActions.crudError(TYPES.UPDATE_ERROR, aDoc.path, err))
-            });
-    }
-
-    function delStart(aDoc) {
-        return rawFetchPromise( aDoc.path + '/' + aDoc.id, 'delete', aDoc)
-            .then(result => {
-                config.dispatch(docActions.delSuccess(aDoc.path, result))
-            })
-            .catch(err => {
-                log.error( 'deleteError =' + err)
-                config.dispatch(docActions.crudError(TYPES.DELETE_ERROR, aDoc.path, err))
-            });
-    }
+    return returnValue
 }
+
+/**
+ *
+ * @param path   the path to read. path is the type of doc to read
+ */
+function readStart(path) {
+    return rawFetchPromise( path)
+        .then(result => {
+            config.dispatch(docActions.readSuccess(path, result))
+        })
+        .catch(err => {
+            config.dispatch(docActions.crudError(TYPES.READ_ERROR, path, err))
+        });
+}
+
+
+function createStart(path, doc) {
+    return rawFetchPromise( path, 'post', doc)
+        .then(result => {
+            config.dispatch(docActions.createSuccess(result))
+        })
+        .catch(err => {
+            config.dispatch(docActions.crudError(TYPES.CREATE_ERROR, path, err))
+        });
+}
+
+function updateStart(aDoc) {
+    return rawFetchPromise( aDoc.path + '/' + aDoc.id, 'put', aDoc)
+        .then(result => {
+            config.dispatch(docActions.updateSuccess(aDoc.path, result))
+        })
+        .catch(err => {
+            config.dispatch(docActions.crudError(TYPES.UPDATE_ERROR, aDoc.path, err))
+        });
+}
+
+function delStart(aDoc) {
+    return rawFetchPromise( aDoc.path + '/' + aDoc.id, 'delete', aDoc)
+        .then(result => {
+            config.dispatch(docActions.delSuccess(aDoc))
+        })
+        .catch(err => {
+            config.dispatch(docActions.crudError(TYPES.DELETE_ERROR, aDoc.path, err))
+        });
+}
+
 
 

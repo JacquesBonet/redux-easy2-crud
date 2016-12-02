@@ -21,7 +21,7 @@ export const update = (doc) => ({ ...doc, type: TYPES.UPDATE})
 
 export const updateSuccess = (doc) => ({ ...doc, type: TYPES.UPDATE_SUCCESS})
 
-export const del = (path, id) => ({ path, id, type: TYPES.DELETE})
+export const del = (doc) => ({ ...doc, type: TYPES.DELETE})
 
 export const delSuccess = (doc)  => ({ ...doc, type: TYPES.DELETE_SUCCESS})
 

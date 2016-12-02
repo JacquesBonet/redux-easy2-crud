@@ -1,8 +1,7 @@
 import winston from 'winston'
-import cuid from 'cuid'
 import configureStore from './stores'
 import {PATH_TODOS} from './constants/todos'
-import * as actions  from './actions/docs'
+import * as actions  from '../src/actions/docs'
 import {existIdPromise} from './utils/dbUtils'
 
 winston.level = 'debug';

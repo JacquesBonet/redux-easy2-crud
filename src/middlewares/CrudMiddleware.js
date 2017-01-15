@@ -23,7 +23,11 @@ function checkError(response) {
     return response;
 }
 
-const ROOT_PATH = 'http://localhost:3001/';
+var ROOT_PATH = 'http://localhost:3001/';
+
+export function setRootPath( url) {
+    ROOT_PATH = url;
+}
 
 const config = {
 };
